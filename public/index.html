@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso denegado</title>
-</head>
-<body>
-    <h1>Acceso Denegados</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sign-in</title>
+  </head>
+  <body>
+    <h1>Google Sign-in</h1>
+    <hr />
+
+    <div
+      id="g_id_onload"
+      data-client_id="481299369222-td8sl1e4t9a3n0rem2b4qmad9gu3sqcr.apps.googleusercontent.com"
+      data-auto_prompt="false"
+      data-callback="handleCredentialResponse"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script>
+      function handleCredentialResponse(response) {
+       console.log('id_token',response.credential);
+      }
+    </script>
+  </body>
 </html>
