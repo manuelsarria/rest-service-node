@@ -15,6 +15,7 @@
       data-client_id="481299369222-td8sl1e4t9a3n0rem2b4qmad9gu3sqcr.apps.googleusercontent.com"
       data-auto_prompt="false"
       data-callback="handleCredentialResponse"
+      data-auto-select="true"
     ></div>
     <div
       class="g_id_signin"
@@ -28,26 +29,37 @@
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+    <button id="g_id_signout">Sign Out</button>
+
     <script>
       function handleCredentialResponse(response) {
 
-      //  console.log('id_token',response.credential);
-      const body = { id_token: response.credential};
-
+      const body = { id_token: response.credential }
       fetch('http://localhost:8080/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(body)
-
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
       })
-        .then( resp => resp.json())
-        .then( resp => {
-          console.log(resp)
-        })
-        .catch( console.warm );
+      .then( r=> r.json() )
+      .then( resp =>{
+          console.log(resp )
+          localStorage.setItem('email', resp.usuario.correo )
+      })
+      .catch( console.warn )
+      }
 
+      const button = document.getElementById('g_id_signout');
+      button.onclick = async() => {
+
+          console.log(google.accounts.id)
+          google.accounts.id.disableAutoSelect()
+          google.accounts.id.revoke(localStorage.getItem('email'), done => {
+              console.log('consent revoked');
+              localStorage.clear()
+              location.reload()
+          });
       }
     </script>
   </body>
